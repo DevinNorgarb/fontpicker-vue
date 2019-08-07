@@ -10,8 +10,11 @@
     </div>
   </div> -->
 
- <div class="md-layout">
-    <md-card :key="id"  v-for="( font, id) in allFonts" class="md-layout-item md-primary">
+ <div v-if="allFonts" class="md-layout">
+<font-picker :api-key="'AIzaSyC4xQCYKx3yedrK_ANpQl_4h1HZFv_jwe4'" :options="{}" :active-font="fontFamily" @change="myFunc"></font-picker>
+
+<p class="apply-font" >TEST TEST TEST TESTTEST TESTTEST TEST</p>
+    <!-- <md-card :key="id"  v-for="( font, id) in allFonts" class="md-layout-item md-primary">
       <md-card-header>
         <md-card-header-text>
           <div :style="`font-family: ${font.family}`" class="md-title">{{font.family}}</div>
@@ -26,7 +29,7 @@
         <md-button>Action</md-button>
         <md-button>Action</md-button>
       </md-card-actions>
-    </md-card>
+    </md-card> -->
 
   </div>
 
@@ -35,15 +38,21 @@
 <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
 <script>
 /* eslint-disable */
+import FontPicker from 'font-picker-vue';
+
 export default {
   name: "Fonts",
   props: {
     msg: String
   },
+  components: {
+    'font-picker': FontPicker
+  },
   data() {
     return {
       allFonts: [],
-      groupedFonts: []
+      groupedFonts: [],
+      fontFamily: 'Roboto'
     }
   },
   computed: {
@@ -62,6 +71,15 @@ export default {
       return {}
     }
   },
+  methods: {
+    myFunc($event) {
+      console.log($event.family);
+
+      this.fontFamily = $event.family
+
+
+    }
+  },
   mounted() {
 
     this.$http
@@ -72,6 +90,14 @@ export default {
         response => {
           // get body data
           this.allFonts = response.data.items;
+
+          for (const key in this.allFonts) {
+            if (this.allFonts.hasOwnProperty(key)) {
+              const element = this.allFonts[key];
+              this.allFonts[key].sort = "popularity"
+
+            }
+          }
           console.log(response);
 
 
