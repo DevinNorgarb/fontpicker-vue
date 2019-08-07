@@ -7,7 +7,9 @@ import "vue-material/dist/vue-material.min.css";
 /* eslint-disable */
 Vue.use(VueMaterial);
 Vue.use(VueAxios, axios);
+import FontPicker from "font-picker-vue";
 
+Vue.use(FontPicker);
 Vue.config.productionTip = false;
 
 new Vue({
