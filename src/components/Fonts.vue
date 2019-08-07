@@ -11,15 +11,14 @@
   </div> -->
 
  <div class="md-layout">
-    <md-card  v-for="font in fonts.items.slice(0,10)" class="md-layout-item md-primary">
+    <md-card :key="id"  v-for="( font, id) in allFonts" class="md-layout-item md-primary">
       <md-card-header>
         <md-card-header-text>
-          <div class="md-title">{{font.family}}</div>
-          <div class="md-subhead ">TEST TEXT </div>
+          <div :style="`font-family: ${font.family}`" class="md-title">{{font.family}}</div>
+          <div :style="`font-family: ${font.family}`" class="md-subhead ">TEST TEXT </div>
         </md-card-header-text>
 
         <md-card-media>
-          <!-- <img src="/assets/examples/avatar-2.jpg" alt="Avatar"> -->
         </md-card-media>
       </md-card-header>
 
@@ -43,7 +42,24 @@ export default {
   },
   data() {
     return {
-      fonts: []
+      allFonts: [],
+      groupedFonts: []
+    }
+  },
+  computed: {
+    fonts() {
+   if (this.allFonts) {
+      for (const key in this.allFonts) {
+        console.log(key);
+        if (this.allFonts.hasOwnProperty(key)) {
+          const element = this.allFonts[key];
+          // this.groupedFonts[key][element.category] = element
+        }
+      }
+
+        return this.allFonts.slice(0,10)
+      }
+      return {}
     }
   },
   mounted() {
@@ -55,9 +71,9 @@ export default {
       .then(
         response => {
           // get body data
-          this.fonts = response.data;
-          console.log(response
-          );
+          this.allFonts = response.data.items;
+          console.log(response);
+
 
         },
         response => {
