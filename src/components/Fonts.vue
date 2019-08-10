@@ -37,7 +37,6 @@ export default {
         console.log(key);
         if (this.allFonts.hasOwnProperty(key)) {
           const element = this.allFonts[key];
-          // this.groupedFonts[key][element.category] = element
         }
       }
 
